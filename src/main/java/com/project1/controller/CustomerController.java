@@ -1,6 +1,7 @@
 package com.project1.controller;
 
 import com.project1.dto.CustomerRequest;
+import com.project1.dto.CustomerUpdateRequest;
 import com.project1.dto.CustomerResponse;
 import com.project1.service.CustomerService;
 import jakarta.validation.Valid;
@@ -29,5 +30,13 @@ public class CustomerController {
     public ResponseEntity<String> deleteCustomer(@PathVariable("email") String email) {
         customerService.deleteCustomer(email);
         return ResponseEntity.ok("Customer deleted successfully");
+    }
+
+    @PatchMapping("/{email}")
+    public ResponseEntity<String> updateCustomer(
+            @PathVariable("email") String email,
+            @RequestBody @Valid CustomerUpdateRequest updateRequest) {
+        customerService.updateCustomer(email, updateRequest);
+        return ResponseEntity.ok("Customer updated successfully");
     }
 }

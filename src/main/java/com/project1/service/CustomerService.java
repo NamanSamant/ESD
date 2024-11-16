@@ -11,6 +11,9 @@ import com.project1.mapper.CustomerMapper;
 import com.project1.repo.CustomerRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import com.project1.dto.CustomerUpdateRequest;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import static java.lang.String.format;
 
@@ -59,5 +62,30 @@ public class CustomerService {
     public void deleteCustomer(String email) {
         Customer customer = getCustomer(email);
         customerRepo.delete(customer);
+    }
+
+    // FUNCTION TO UPDATE CUSTOMER BASED ON EMAIL
+    public void updateCustomer(String email, CustomerUpdateRequest updateRequest) {
+        Customer customer = customerRepo.findByEmail(email).orElseThrow(() -> new RuntimeException("Customer not found with email: " + email));
+
+        // Updating only the fields allowed to be modified
+        if (updateRequest.getFirst_name() != null) {
+            customer.setFirstName(updateRequest.getFirst_name());
+        }
+        if (updateRequest.getLast_name() != null) {
+            customer.setLastName(updateRequest.getLast_name());
+        }
+        if (updateRequest.getAddress() != null) {
+            customer.setAddress(updateRequest.getAddress());
+        }
+        if (updateRequest.getCity() != null) {
+            customer.setCity(updateRequest.getCity());
+        }
+        if (updateRequest.getPin() != null) {
+            customer.setPin(updateRequest.getPin());
+        }
+
+        // Save for the updated details
+        customerRepo.save(customer);
     }
 }
