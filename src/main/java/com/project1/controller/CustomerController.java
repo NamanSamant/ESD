@@ -24,4 +24,10 @@ public class CustomerController {
     public ResponseEntity<String> createCustomer(@RequestBody @Valid CustomerRequest request) {
         return ResponseEntity.ok(customerService.createCustomer(request));
     }
+
+    @DeleteMapping("/{email}")
+    public ResponseEntity<String> deleteCustomer(@PathVariable("email") String email) {
+        customerService.deleteCustomer(email);
+        return ResponseEntity.ok("Customer deleted successfully");
+    }
 }
