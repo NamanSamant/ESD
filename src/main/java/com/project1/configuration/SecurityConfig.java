@@ -17,10 +17,10 @@ public class SecurityConfig  implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        // INTERCEPTOR WILL BE APPLIED TO ALL END POINTS EXCEPT /api/v1/auth/
+        // INTERCEPTOR WILL BE APPLIED TO ALL END POINTS EXCEPT /api/v1/auth/, /api/v1/customers & /api/v1/products/
         registry.addInterceptor(requestInterceptor)
                 .addPathPatterns("/**")
-                .excludePathPatterns("/api/v1/auth/**", "/api/v1/customers");
+                .excludePathPatterns("/api/v1/auth/**", "/api/v1/customers","/api/v1/products/**");
     }
     @Bean
     public PasswordEncoder passwordEncoder() {
